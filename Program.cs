@@ -12,18 +12,9 @@ namespace IdValidator
         static void Main(String[] args)
         {
 
-            var Id_Lines =;
+            Id_Input id_Input = new Id_Input();
 
-
-            try
-            {
-                Id_Lines = File.ReadLines("Id_list.txt");
-            }
-            catch (System.Exception)
-            {
-
-                throw;
-            }
+            var Id_Lines = id_Input.readFile("Id_list.txt");
 
             foreach (var Id_Line in Id_Lines)
             {

@@ -36,6 +36,7 @@ public class Id_Input
 
     }
 
+
     bool validLength(string Id_Line)
     {
         return Regex.IsMatch(Id_Line, @"\d{13}");
@@ -69,28 +70,31 @@ public class Id_Input
         return Regex.IsMatch(Id_Line, @"");
 
     }
-    public void ID_date_Formater(string Id_Line)
+
+    public string[] readFile(string file)
+    {
+        string[] empty = new string[0];
+        try
+        {
+            return File.ReadAllLines(file);
+        }
+        catch (System.Exception e)
+        {
+
+            Console.WriteLine("no file foun");
+            return empty;
+        }
+
+    }
+
+    void PrintOut(string Id_Line)
     {
 
         Id_OutPut id_OutPut = new Id_OutPut();
-
-        //Checking if the character is a digit
-        Id_Digit_Checker(Id_Line);
-
-
-
-
-        //Checking if the ID number has the valid length 
-        if (Id_Line.Length == 13)
+        if (!validLength(Id_Line))
         {
-            Id_Slicer(Id_Line);
-
-
-            //Converts the Year into an integer
             int yearNumber = Convert.ToInt32(Year);
-            // Console.WriteLine(yearNumber);
 
-            //Checks if the year is in the 90's or 20's
             if (yearNumber < 30)
             {
                 Console.WriteLine(Day + "/" + Month + "/" + "20" + Year);
@@ -102,15 +106,19 @@ public class Id_Input
                 id_OutPut.ID_Writter(Id_Line);
             }
         }
-        //The Id has an error
         else
         {
             Console.WriteLine("Error: " + Id_Line);
         }
     }
 
-    public IEnumerable<string> readFile()
+    public void ID_date_Formater(string Id_Line)
     {
 
+        Id_Digit_Checker(Id_Line);
+
+        Id_Slicer(Id_Line);
+
+        PrintOut(Id_Line);
     }
 }
